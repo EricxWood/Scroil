@@ -1,150 +1,96 @@
 # Scroil
 
-Scroil is a Windows scrolling enhancement project built to make mouse-wheel scrolling feel smoother, more controllable, and more consistent across the apps you use every day.
+Scroil is a smooth-scrolling extension for Windows that makes mouse wheel scrolling feel more natural, consistent, and customizable.
 
-The project combines:
+## Features
+* **Global Smooth Scrolling:** Brings smoother mouse wheel scrolling across your apps on Windows, reducing the jumpy feeling of apps's default scrolling behavior.
 
-- A native backend that intercepts wheel input and renders smoother scroll output.
-- A desktop frontend that lets you manage settings, app profiles, diagnostics, and runtime behavior without digging through source code.
+| Scroil OFF (Windows Default) | Scroil ON (Smooth) |
+| :---: | :---: |
+| <video src="https://github.com/user-attachments/assets/c1b38a43-d146-450c-b62d-84c7ee192f41" autoplay loop muted playsinline></video> | <video src="https://github.com/user-attachments/assets/7e8140ef-c5f2-43f7-ae84-b33d7e9c860e" autoplay loop muted playsinline></video> |
 
-## Why Use Scroil
+<br>
 
-Scroil is for people who want scrolling to feel less abrupt and more natural on Windows, especially in software where default mouse-wheel behavior feels too jumpy or inconsistent.
+- **Custom Scroll Feel:** Adjust speed, step size, acceleration, deacceleration, and fine-grained scroll behavior.
+  <p align="center">
+  <img width="282" height="474" alt="Custom Scroll Feel" src="https://github.com/user-attachments/assets/8f2f6aa6-e339-47e0-8091-ff9e12eec219" />
+</p>
 
-You may want Scroil if you care about:
+<br>
 
-- Smoother wheel scrolling in browsers, editors, file explorers (planned feature), and other desktop apps.
-- Per-app behavior instead of one global scroll style for everything.
-- Faster tuning of step size, acceleration, and deceleration.
-- A project that is actively moving toward smarter app detection and better compatibility.
+- **Scrolling Accelerator:** Increases scroll speed during faster wheel movement, making long pages easier to move through.
 
-## Current Beta Snapshot
+| Scroil OFF (Windows Default) | Scroil ON (Scroll hundreds of lines in a second with the same natural wheel motion) |
+| :---: | :---: |
+| <video src="https://github.com/user-attachments/assets/c10b28f3-9c43-4d22-a353-5d78de22c060" autoplay loop muted playsinline></video> | <video src="https://github.com/user-attachments/assets/de6181d6-89f2-4d00-8772-a4bfa84bf226" autoplay loop muted playsinline></video>
 
-The current combined desktop beta pairs:
+<br>
+  
+- **App Picker & Per-App Control:** Add currently open apps to your Scroil profile list, customize scrolling experience for each app.
+  <p align="center">
+  <img width="635" height="598" alt="App Profiles" src="https://github.com/user-attachments/assets/aba6c290-85e4-4823-b419-26ff6f8429c0" />
+  </p>
 
-- Frontend: `beta 1.0.7`
-- Backend: `beta 1.0.1`
+  <br>
+  
+- **Auto App Classifier:** Automatically recognizes apps of the same types, like Chromium-based apps, including Teams, Discord, Outlook and others, then applies the right scrolling config for that app type.
+  <p align="center">
+  <img width="2816" height="1536" alt="Auto App Classifier" src="https://github.com/user-attachments/assets/32dcfe50-e15c-42fb-ad3b-4c571411f57b" />
+  </p>
 
-Current work already includes:
+  <br>
 
-- A Windows desktop frontend for editing and applying scroll settings.
-- Runtime config, default config, and setting-range validation.
-- App-aware scroll profiles, including default and per-app behavior.
-- Open-window app discovery and on-screen window picking.
-- System tray support.
-- Game detection support.
-- Frontend diagnostics, crash-dump capture, and log severity filtering.
-- Backend algorithm tuning and performance-focused updates.
+- **Game Detection:** Recognizes games automatically and turn off smooth scroll for games to avoid interfering with your gameplay.
+  <p align="center">
+  <img width="1609" height="916" alt="Game Detection" src="https://github.com/user-attachments/assets/10afbbb7-cea1-446a-bd58-4c1140408f04" />
+  </p>
 
-## GUI Basics
 
-Scroil's desktop app is built around profiles. A profile is a set of scrolling settings that Scroil can apply to a specific app.
 
-### Default Profile
+## OS and Hardware Requirements
 
-The `default` profile is your baseline. It is used when an app does not have its own custom profile.
+Scroil has been verified working on Windows 10 and Windows 11. It may need a reasonably responsive system for the best smooth-scrolling experience, and the effect is more noticeable on high-refresh-rate displays.
 
-If you want Scroil to feel better everywhere first, tune the default profile before creating lots of app-specific profiles.
+## Important Note for VS Code, Chrome, Edge, and Firefox Users
 
-### App Profiles
+To get the best result with Scroil, turn off built-in smooth scrolling in apps that already apply their own smooth-scroll effect. Otherwise, their own scrolling behavior can conflict with Scroil.
 
-An app profile is a custom set of scrolling settings for one app.
+### Chrome
 
-Use an app profile when:
+1. Open Chrome.
+2. In the address bar, enter:
 
-- One app feels better with different tuning than your general setup.
-- An app scrolls too fast, too slow, too sharply, or too softly.
-- You want different behavior for browsers, editors, file explorers, or games.
+```text
+chrome://flags/#smooth-scrolling
+```
 
-### How Profiles Work
+3. Set `Smooth Scrolling` to `Disabled`.
+4. Relaunch Chrome.
 
-Scroil can detect apps and apply the matching profile automatically. If no matching app profile exists, Scroil falls back to the default profile.
+### Edge
 
-This means you can keep:
+1. Open Edge.
+2. In the address bar, enter:
 
-- One general profile for most software
-- Special profiles only for apps that need them
+```text
+edge://flags/#smooth-scrolling
+```
 
-### Main Settings
+3. Set `Smooth Scrolling` to `Disabled`.
+4. Relaunch Edge.
 
-The most important profile settings are:
+### Firefox
 
-- `step_size`: how much scrolling power each wheel step contributes
-- `acceleration_duration`: how quickly scrolling ramps up
-- `deacceleration_duration`: how long scrolling eases out
-- `enabled`: whether Scroil should actively control scrolling for that profile
+1. Open Firefox.
+2. Open Settings.
+3. Go to `General` > `Browsing`.
+4. Turn off `Use smooth scrolling`.
+5. If you cannot find it, enter `about:config` in the address bar, search for `general.smoothScroll`, and set it to `false`.
 
-In simple terms:
+### VS Code
 
-- Higher `step_size` usually feels stronger or faster.
-- Shorter acceleration usually feels more immediate.
-- Longer deceleration usually feels smoother and floatier.
-
-### Adding A Profile
-
-You can add app-specific profiles by:
-
-- Choosing from currently open windows
-- Using the on-screen window picker
-
-That makes it easier to target the exact app you want without manually typing process names.
-
-### Important Compatibility Note
-
-Some apps already have their own smooth-scrolling behavior. In those apps, built-in smooth scrolling can conflict with Scroil.
-
-If scrolling feels doubled, overly delayed, or inconsistent, turn off the app's own smooth-scrolling feature first, especially in:
-
-- Chrome
-- Edge
-- VS Code
-
-## Project Direction
-
-Scroil is moving toward a desktop experience where smooth scrolling is:
-
-- Easier to configure.
-- More reliable across different apps.
-- More adaptive to the app currently under the cursor.
-- Better instrumented when something goes wrong.
-
-The long-term goal is to make Scroil feel less like a prototype and more like a practical Windows utility for people who care about input quality.
-
-## Roadmap
-
-### Near-Term
-
-1. Improve release polish for the packaged desktop build.
-2. Keep tightening metadata detection, app discovery, and frontend stability.
-3. Refine default profiles so first-run behavior feels better with less manual tuning.
-4. Expand diagnostics so crashes, backend restarts, and config issues are easier to trace.
-
-### Next
-
-1. Make app classification smarter so Scroil can choose stronger defaults automatically.
-2. Improve per-app profile management and profile editing flow inside the frontend.
-3. Continue compatibility testing for browsers, editors, file explorers, launchers, and games.
-4. Add better onboarding so users understand setup, browser conflicts, and recommended defaults faster.
-
-### Longer-Term
-
-1. Explore higher-precision injection paths beyond the current wheel-output approach.
-2. Build a more advanced app behavior model for smooth-scroll compatibility and special-case handling.
-3. Add import/export and preset-sharing options for scroll profiles.
-4. Push the project closer to a stable general-use Windows release.
-
-## Try It Out
-
-You can download builds from the [Releases](https://github.com/EricxWood/Scroil/releases) section of the repository.
-
-If you are testing a pre-release:
-
-- Expect active iteration.
-- Expect configuration and compatibility to keep improving between builds.
-- Use the desktop frontend to tune behavior instead of treating the defaults as final.
-
-## Notes
-
-- Scroil is currently focused on Windows.
-- Browser-native smooth scrolling can still conflict with Scroil in some cases.
-- This project is still in beta, so polish and compatibility are improving alongside core functionality.
+1. Open VS Code.
+2. Open Settings.
+3. Search for `smooth scrolling`.
+4. Turn off `Editor: Smooth Scrolling`.
+5. If needed, also turn off smooth scrolling in any extensions or custom settings that re-enable it.
